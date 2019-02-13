@@ -12,15 +12,29 @@
 
     <!--当我们在下面使用注解时，会自动在上面的schemaLocation中生成schema地址-->
 
+    <!--开启注解扫描-->
+    <context:component-scan base-package="controller"/>
     <!--启动注解驱动的springMVC功能，注册请求url和注解POJO类方法的映射，声明了@RequestMapping、@RequestBody等-->
     <mvc:annotation-driven/>
-    <!--使用注解开发，需要配置一个注解扫描器-->
-    <context:component-scan base-package="controller"/>
-    <!--配置视图解析器-->
+    <!--&lt;!&ndash;配置html视图解析器，处理请求转发&ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--&lt;!&ndash;配置从项目根目录到指定目录一端路径，建议指定浅一点的目录&ndash;&gt;-->
+        <!--<property name="prefix" value="/WEB-INF/html/"></property>-->
+        <!--<property name="order" value="2"></property>-->
+        <!--<property name="suffix" value=".html"></property>-->
+    <!--</bean>-->
+    <!--配置使用默认servlet处理静态资源请求-->
+    <mvc:default-servlet-handler/>
+    <!--添加静态资源映射-->
+    <!--<mvc:resources mapping="/css/**" location="/css/" />-->
+    <!--<mvc:resources mapping="/images/**" location="/images/" />-->
+    <!--<mvc:resources mapping="/js/**" location="/js/" />-->
+
+    <!--配置jsp视图解析器，处理请求转发-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--配置从项目根目录到指定目录一端路径，建议指定浅一点的目录-->
         <property name="prefix" value="/WEB-INF/jsp/"></property>
-        <!-- 文件的后缀名 -->
         <property name="suffix" value=".jsp"></property>
     </bean>
+
 </beans>
