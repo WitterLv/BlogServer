@@ -10,12 +10,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Blog</title>
+    <title>Edit Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--markdown插件样式-->
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/editormd/examples/css/style.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/editormd/css/editormd.css" />
+    <!--网页基本样式-->
     <link rel="stylesheet" type="text/css" href="../../../BlogServer/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../BlogServer/css/base.css">
     <link rel="stylesheet" type="text/css" href="../../../BlogServer/css/index.css">
     <link rel="stylesheet" type="text/css" href="../../../BlogServer/css/m.css">
+    <link rel="stylesheet" type="text/css" href="../../../BlogServer/css/edit.css">
+
     <script src="../../../BlogServer/js/jquery-3.3.1.min.js"></script>
     <script>
         window.onload = function ()
@@ -29,7 +35,6 @@
                 oH2.className = style.display == "block" ? "open" : ""
             }
 
-            document.getElementById("container").style.display = 'none';
         }
     </script>
 </head>
@@ -41,19 +46,19 @@
             <h2><span class="navicon"></span></h2>
             <ul>
                 <li><a href="../../../BlogServer/index.html">HOME</a></li>
-                <li><a href="ITEM2.html">ITEM2</a></li>
-                <li><a href="ITEM3.html">ITEM3</a></li>
-                <li><a href="ITEM4.html">ITEM4</a></li>
-                <li><a href="ITEM5.html">ITEM5</a></li>
+                <li><a href="ITEM2.html">写博客</a></li>
+                <li><a href="ITEM3.html">博客管理</a></li>
+                <li><a href="ITEM4.html">广告管理</a></li>
+                <li><a href="ITEM5.html">个人管理</a></li>
             </ul>
         </div>
         <nav class="topnav" id="topnav">
             <ul>
                 <li><a href="../../../BlogServer/index.html">HOME</a></li>
-                <li><a href="ITEM2.html">ITEM2</a></li>
-                <li><a href="ITEM3.html">ITEM3</a></li>
-                <li><a href="ITEM4.html">ITEM4</a></li>
-                <li><a href="ITEM5.html">ITEM5</a></li>
+                <li><a href="ITEM2.html">写博客</a></li>
+                <li><a href="ITEM3.html">博文管理</a></li>
+                <li><a href="ITEM4.html">广告管理</a></li>
+                <li><a href="ITEM5.html">个人信息</a></li>
             </ul>
         </nav>
     </div>
@@ -63,72 +68,92 @@
     <div class="sub">邮箱：email_lzc@163.com</div>
 </div>
 <article>
-    <div class="blogs">
+    <form id="editSaveForm" action="edit/editSave.do" method="post">
+        <div class="blog-title">
+            <input class="title-content" type="text" name="title" placeholder="&nbsp;&nbsp;输入文章标题"/>
+        </div>
+        <div class="editormd" id="test-editormd">
+            <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc">[TOC]
 
+    #### Disabled options
 
-    </div>
-    <div class="sidebar">
-        <div class="about">
-            <div class="avatar"> <img src="../../../BlogServer/images/avatar.png" alt=""> </div>
-            <p class="abname">吕志成</p>
-            <p class="abposition">java后端工程师</p>
-            <div class="abtext"> 一个怀揣赘肉的95后青年，主攻java后端技术，在这里和大家分享自己学习的经历，一点一点码出精彩人生。 </div>
+    - TeX (Based on KaTeX);
+    - Emoji;
+    - Task lists;
+    - HTML tags decode;
+    - Flowchart and Sequence Diagram;
+
+    #### Editor.md directory
+
+        editor.md/
+                lib/
+                css/
+                scss/
+                tests/
+                fonts/
+                images/
+                plugins/
+                examples/
+                languages/
+                editormd.js
+                ...
+
+    ```html
+    &lt;!-- English --&gt;
+    &lt;script src="../dist/js/languages/en.js"&gt;&lt;/script&gt;
+
+    &lt;!-- 繁體中文 --&gt;
+    &lt;script src="../dist/js/languages/zh-tw.js"&gt;&lt;/script&gt;
+    ```
+            </textarea>
+            <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+            <textarea class="editormd-html-textarea" name="text"></textarea>
         </div>
-        <div class="cloud">
-            <h2 class="hometitle">标签云</h2>
-            <ul>
-                <a href="/">JAVA</a> <a href="/">Linux</a> <a href="/">HTML</a> <a href="/">JavaScript</a> <a href="/">tomcat</a> <a href="/">Spring</a> <a href="/">Mybatis</a> <a href="/">CSS</a><a href="/">大数据</a> <a href="/">微信小程序</a> <a href="/">数据库</a> <a href="/">开发工具</a>
-            </ul>
+        <script src="<%=request.getContextPath()%>/editormd/examples/js/jquery.min.js"></script>
+        <script src="<%=request.getContextPath()%>/editormd/editormd.min.js"></script>
+        <script type="text/javascript">
+            var testEditor;
+
+            $(function() {
+                testEditor = editormd("test-editormd", {
+                    width   : "90%",
+                    height  : 640,
+                    syncScrolling : "single",
+                    path    : "<%=request.getContextPath()%>/editormd/lib/",
+                    //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+                    saveHTMLToTextarea : true
+                });
+
+                /*
+                // or
+                testEditor = editormd({
+                    id      : "test-editormd",
+                    width   : "90%",
+                    height  : 640,
+                    path    : "../lib/"
+                });
+                */
+            });
+        </script>
+        <div class="abstract">
+            <textarea class="abs-content" type="text" name="abstract" placeholder="&nbsp;&nbsp;输入文章摘要"></textarea>
         </div>
-        <div class="paihang">
-            <h2 class="hometitle">点击排行</h2>
-            <ul>
-                <li><b><a href="../../../BlogServer/download/div/2015-04-10/746.html" target="_blank">柠檬绿兔小白30...</a></b>
-                    <p><i><img src="../../../BlogServer/images/t02.jpg"></i>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标...</p>
-                </li>
-                <li><b><a href="../../../BlogServer/download/div/2014-02-19/649.html" target="_blank"> 2014草根寻梦30...</a></b>
-                    <p><i><img src="../../../BlogServer/images/b03.jpg"></i>2014第一版《草根寻梦》个人博客模板简单、优雅、稳重、大气、低调。专为年轻有志向却又低调的草根站长设...</p>
-                </li>
-                <li><b><a href="../../../BlogServer/download/div/2013-08-08/571.html" target="_blank">黑色质感时间轴30...</a></b>
-                    <p><i><img src="../../../BlogServer/images/b04.jpg"></i>黑色时间轴html5个人博客模板颜色以黑色为主色，添加了彩色作为网页的一个亮点，导航高亮显示、banner图片...</p>
-                </li>
-            </ul>
+        <div class="tag-div" >
+            <span id="tag-span">添加标签：</span>
+            <input class="tag-content" tyle="text"/><input class="delTag" type="button" value="x" onclick="del(this)" />
+            <input class="addTag" type="button" value="+" onclick="add()"/>
         </div>
-        <div class="paihang">
-            <h2 class="hometitle">站长推荐</h2>
-            <ul>
-                <li><b><a href="../../../BlogServer/download/div/2015-04-10/746.html" target="_blank">【活动作品】柠檬绿兔小白个人博客模板30...</a></b>
-                    <p><i><img src="../../../BlogServer/images/t02.jpg"></i>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标...</p>
-                </li>
-                <li><b><a href="../../../BlogServer/download/div/2014-02-19/649.html" target="_blank"> 个人博客模板（2014草根寻梦）30...</a></b>
-                    <p><i><img src="../../../BlogServer/images/b03.jpg"></i>2014第一版《草根寻梦》个人博客模板简单、优雅、稳重、大气、低调。专为年轻有志向却又低调的草根站长设...</p>
-                </li>
-                <li><b><a href="/download/div/2013-08-08/571.html" target="_blank">黑色质感时间轴html5个人博客模板30...</a></b>
-                    <p><i><img src="../../../BlogServer/images/b04.jpg"></i>黑色时间轴html5个人博客模板颜色以黑色为主色，添加了彩色作为网页的一个亮点，导航高亮显示、banner图片...</p>
-                </li>
-            </ul>
+        <div class="save-div">
+            <input class="saveBlog" type="submit" value="保存"/>
+            <input class="backIndex" type="button" value="返回"/>
         </div>
-        <div class="links">
-            <h2 class="hometitle">友情链接</h2>
-            <ul>
-                <li><a href="http://www.yangqq.com" title="吕志成个人博客">吕志成个人博客</a></li>
-                <li><a href="http://www.yangqq.com" title="吕志成个人博客">吕志成个人博客</a></li>
-                <li><a href="http://www.yangqq.com" title="吕志成个人博客">吕志成个人博客</a></li>
-            </ul>
-        </div>
-        <div class="weixin">
-            <h2 class="hometitle">个人微信</h2>
-            <ul>
-                <img src="../../../BlogServer/images/wx.jpg">
-            </ul>
-        </div>
-    </div>
+    </form>
+    <script src="<%=request.getContextPath()%>/js/edit.js"></script>
 </article>
 <div class="blank"></div>
 <footer>
     <p>Established By <a href="/">吕志成个人博客</a> <a href="/">蜀ICP备11002373号-1</a></p>
 </footer>
 <script src="../../../BlogServer/js/nav.js"></script>
-<script src="../../../BlogServer/js/index.js"></script>
 </body>
 </html>

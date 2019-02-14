@@ -1,0 +1,78 @@
+.blog-title{
+    width: 100%;
+    height:100px;
+}
+.title-content{
+    border-radius: 5px;
+    margin: 25px;
+    text-align: left;
+    font-size: x-large;
+    width: 90%;
+    height:50px;
+    box-shadow: 0px 0px 10px #0f0f0f inset;
+}
+.abstract{
+    width: 100%;
+    height:200px;
+}
+.abs-content{
+    border-radius: 5px;
+    margin-top: 25px;
+    text-align: left;
+    font-size: x-large;
+    width: 90%;
+    height:150px;
+    box-shadow: 0px 0px 4px #0f0f0f inset;
+}
+.tag-div{
+    font-size:large;
+}
+.tag-content{
+    border-radius: 5px;
+    width: 100px;
+    height:35px;
+    margin-bottom: 10px;
+}
+.addTag{
+    border-radius: 15%;
+    border-style: none;
+    font-size: large;
+    color: #fdfdfe;
+    background-color: #3399CC;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.delTag{
+    border-radius: 15%;
+    border-style: none;
+    font-size: large;
+    color: #d6d5d4;
+    background-color: transparent;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.delTag:hover{
+    color: #c12e2a;
+}
+.addTag:hover{
+    background-color: #1d75b3;
+}
+.save-div{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.saveBlog,.backIndex{
+    margin-left: 60px;
+    margin-right: 60px;
+    width: 10%;
+    height: 40px;
+    border-color: #0f0f0f;
+    background-color: transparent;
+    border-radius: 10%;
+    text-align: center;
+    font-size: large;
+}
