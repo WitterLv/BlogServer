@@ -144,7 +144,12 @@
         </div>
         <div class="tag-div" >
             <span id="tag-span">添加标签：</span>
-            <input class="tag-content" tyle="text"/><input class="delTag" type="button" value="x" onclick="del(this)" />
+            <input id="tag-content" name="tag-name" list="tag-list" class="tag-content" tyle="text" onfocus="getXhr()">
+                <datalist id="tag-list">
+                    <option selected="selected">编辑选择</option>
+                </datalist>
+            </input>
+            <input class="delTag" type="button" value="x" onclick="del(this)" />
             <input class="addTag" type="button" value="+" onclick="add()"/>
         </div>
         <div class="save-div">

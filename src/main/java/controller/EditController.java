@@ -1,16 +1,21 @@
 package controller;
 
+
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/login/edit")
@@ -47,6 +52,17 @@ public class EditController {
             }
             e.printStackTrace();
         }
+    }
 
+    @RequestMapping(value = "/tagQuery.do",method = RequestMethod.GET)
+    @ResponseBody
+    public String tagQuery(){
+       List<String> list = new ArrayList<String>();
+       list.add(0,"JAVA");
+       list.add(1,"HTML");
+       list.add(2,"ORACLE");
+       System.out.println(list.toString());
+       String ja = JSON.toJSONString(list);
+       return ja;
     }
 }

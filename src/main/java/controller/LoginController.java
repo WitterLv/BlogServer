@@ -14,9 +14,9 @@ import java.io.IOException;
 public class LoginController{
     @RequestMapping(value = "/loginIn.do")
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("==============");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("edit");
         return modelAndView;
     }
+
 }
