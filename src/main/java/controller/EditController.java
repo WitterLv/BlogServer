@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import service.EditService;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -20,6 +22,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/login/edit")
 public class EditController {
+
+    @Resource
+    private EditService editService;
 
     @RequestMapping(value = "/uploadImage.do",method = RequestMethod.POST)
     public void uploadImage(HttpServletRequest request, HttpServletResponse response,
@@ -64,5 +69,27 @@ public class EditController {
        System.out.println(list.toString());
        String ja = JSON.toJSONString(list);
        return ja;
+    }
+
+    @RequestMapping("/editSave.do")
+    public void editSave(HttpServletRequest request, HttpServletResponse response){
+        try {
+            request.setCharacterEncoding("UTF-8");
+            response.setHeader("ContentType","text/html");
+            response.setCharacterEncoding("UTF-8");
+            if(true){
+                response.getWriter().write("{\"success\": 1,\"message\": \"保存成功\"}");
+            }else{
+                response.getWriter().write("{\"success\": 0,\"message\": \"保存失败:\"}");
+            }
+        } catch (Exception e) {
+            try {
+                response.getWriter().write("{\"success\": 0,\"message\": \"保存失败:"+e.getMessage()+"\"}");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+
     }
 }
