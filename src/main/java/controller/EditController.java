@@ -3,6 +3,7 @@ package controller;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import service.EditService;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -23,8 +23,8 @@ import java.util.List;
 @RequestMapping("/login/edit")
 public class EditController {
 
-    @Resource
-    private EditService editService;
+    @Autowired
+    private EditService editService ;
 
     @RequestMapping(value = "/uploadImage.do",method = RequestMethod.POST)
     public void uploadImage(HttpServletRequest request, HttpServletResponse response,

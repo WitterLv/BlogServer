@@ -1,4 +1,5 @@
 function add(){
+    var nameIndex = 0;
     $("#tag-span").append('<input id="tag-content" name="tag-name" list="tag-list" class="tag-content" tyle="text" onfocus="getXhr()"/><datalist id="tag-list"><option select="selected">编辑选择</option></datalist><input class="delTag" type="button" value="x" onclick="del(this)" />');
 }
 function del(data){

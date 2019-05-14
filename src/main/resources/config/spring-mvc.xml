@@ -14,6 +14,8 @@
 
     <!--开启注解扫描-->
     <context:component-scan base-package="controller"/>
+    <context:component-scan base-package="service"/>
+    <context:component-scan base-package="dao"/>
     <!--启动注解驱动的springMVC功能，注册请求url和注解POJO类方法的映射，声明了@RequestMapping、@RequestBody等-->
     <mvc:annotation-driven/>
     <!--&lt;!&ndash;配置html视图解析器，处理请求转发&ndash;&gt;-->
